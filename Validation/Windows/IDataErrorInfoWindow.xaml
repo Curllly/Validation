@@ -1,0 +1,62 @@
+﻿<Window x:Class="Validation.Windows.IDataErrorInfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Validation.Windows"
+        mc:Ignorable="d"
+        Title="IDataErrorInfoWindow" Height="450" Width="350">
+    <Window.Resources>
+        <Style TargetType="TextBox" x:Key="errorTextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip"
+                            Value="{Binding RelativeSource={RelativeSource Self},
+                            Path=(Validation.Errors)[0].ErrorContent}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="Button" x:Key="enabledButton">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="IsEnabled" Value="False" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <StackPanel x:Name="stackPanel">
+        <TextBlock Text="Добавление пользователя:" />
+        <TextBlock Text="Имя:" Margin="0, 10, 0, 0"/>
+        <TextBox x:Name="NameTextBox" Style="{StaticResource errorTextBox}">
+            <TextBox.Text>
+                <Binding Path="Name">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBlock Text="Логин:" Margin="0, 15, 0, 0"/>
+        <TextBox x:Name="UsernameTextBox" Style="{StaticResource errorTextBox}">
+            <TextBox.Text>
+                <Binding Path="Username">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBlock Text="Возраст:" Margin="0, 15, 0, 0"/>
+        <TextBox x:Name="AgeTextBox" Style="{StaticResource errorTextBox}">
+            <TextBox.Text>
+                <Binding Path="Age">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <Button Content="Добавить" Margin="0, 15, 0, 0" x:Name="AddUserButton"
+                Click="AddUserButton_Click"/>
+    </StackPanel>
+</Window>
